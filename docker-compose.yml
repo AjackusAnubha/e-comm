@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: ecommerce_web
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - "8000:8000"  # Map port 8000 on the container to port 8000 on the host
+    volumes:
+      - .:/app  # Sync project files between host and container
+    environment:
+      - POSTGRES_DB=ecommerce
+      - POSTGRES_USER=ecommerce_user
+      - POSTGRES_PASSWORD=securepassword
+      - POSTGRES_HOST=host.docker.internal  # This points to your local machine
+      - POSTGRES_PORT=5432
+      - DEBUG=True  # Enable debug mode for development
